@@ -1,3 +1,4 @@
+import uuid
 import json
 import hashlib
 from datetime import datetime
@@ -36,6 +37,7 @@ def register_user_in_db(user):
         response = dynamo.put_item(
             TableName="Users",
             Item={
+                "id": str(uuid.uuid4()),
                 "email": {"S": user["email"]},
                 "password": {"S": user["password"]},
                 "created_at": {

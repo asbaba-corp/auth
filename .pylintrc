@@ -1,6 +1,12 @@
 ﻿[MAIN]
 
-disable = C0115, C0114, C0116, R0903, E0401, W0718
+disable =   C0115,
+            C0114,
+            C0116,
+            R0903,
+            E0401,
+            W0718,
+            R0801 #similar lines in 2 files
 
 
 # Analyse import fallback blocks. This can be used to support both Python 2 and
