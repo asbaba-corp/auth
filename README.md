@@ -13,7 +13,7 @@ python main.py
 or with uvicorn
 
 ```
-uvicorn main:app
+uvicorn main:run_app
 ```
 
 # Pytest
