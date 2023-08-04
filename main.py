@@ -6,7 +6,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from src.users.routes import route
 
 
-def start_application():
+def run_app():
     logger = logging.getLogger("uvicorn.access")
     handler = logging.StreamHandler()
     handler.setFormatter(logging.Formatter("%(asctime)s - %(levelname)s - %(message)s"))
@@ -29,4 +29,4 @@ def start_application():
 if __name__ == "__main__":
     import uvicorn
 
-    uvicorn.run(start_application, host="0.0.0.0", port=8000)
+    uvicorn.run(run_app, host="0.0.0.0", port=8000)

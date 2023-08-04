@@ -10,6 +10,12 @@ pip install -r requirements.txt
 python main.py
 ```
 
+or with uvicorn
+
+```
+uvicorn main:app
+```
+
 # Pytest
 
 Pytest with logs:
