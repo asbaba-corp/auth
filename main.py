@@ -3,8 +3,7 @@ import logging
 from fastapi import FastAPI
 from fastapi.logger import logger as api_logger
 from fastapi.middleware.cors import CORSMiddleware
-
-from src.routes import route
+from src.users.routes import route
 
 
 def start_application():
@@ -14,7 +13,7 @@ def start_application():
     logger.addHandler(handler)
     api_logger.setLevel(logging.DEBUG)
     api_logger.info("Starting application")
-    app = FastAPI(title="cataprato_auth", version="v1", docs_url=None)
+    app = FastAPI(title="cataprato_auth", version="v1")
     app.add_middleware(
         CORSMiddleware,
         allow_origins=["*"],

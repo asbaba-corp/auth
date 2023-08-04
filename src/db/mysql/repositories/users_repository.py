@@ -1,7 +1,7 @@
 from fastapi.logger import logger as api_logger
 from sqlalchemy.orm import Session
-from src.schemas import CreateUser
-from src.models import User
+from src.users.schemas import CreateUser
+from src.db.mysql.models.user_models import User
 
 
 def register(database: Session, user: CreateUser, cognito_username: str):
