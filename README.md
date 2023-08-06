@@ -1,8 +1,25 @@
+# DEVOPS SECTION
+
+# Create venv
+
+```
+python -m venv venv
+```
+
 # Install requirements
 
 ```
 pip install -r requirements.txt
 ```
+
+# Deploy to AWS Lambdas
+
+```
+
+sls deploy --aws-profile default
+```
+
+# DEVELOPMENT SECTION
 
 # Run the project
 
