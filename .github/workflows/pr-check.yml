@@ -1,0 +1,8 @@
+name: Build Node.js
+
+on: pull_request 
+  
+jobs:
+  check:
+    uses: asbaba-corp/pipelines/.github/workflows/pr-check-python.yml@main
+    secrets: inherit    
