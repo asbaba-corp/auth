@@ -9,6 +9,11 @@ jobs:
   check:
     runs-on: ubuntu-latest
     steps:
+    - uses: actions/checkout@v3
+    - run: |
+        gh pr checkout ${{ github.event.issue.number }}
+      env:
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     - name: Test
       run: echo ${{github.event.issue.pull_request}}
 #    if: ${{ always() || (github.event.issue.pull_request && github.event.issue.comment.body == '/check') }}
