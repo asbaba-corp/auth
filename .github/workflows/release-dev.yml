@@ -12,5 +12,4 @@ jobs:
       if: github.event.pull_request.merged == true
       with:
         repository_language: "python"
-        config_directory: .
       secrets: inherit   
