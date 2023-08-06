@@ -9,8 +9,8 @@ jobs:
   check:
     runs-on: ubuntu-latest
     steps:
-     - name: Test
-       run: echo ${{github.event.issue.pull_request}}
+    - name: Test
+      run: echo ${{github.event.issue.pull_request}}
 #    if: ${{ always() || (github.event.issue.pull_request && github.event.issue.comment.body == '/check') }}
 #    uses: asbaba-corp/pipelines/.github/workflows/pr-check-python.yml@main
 #    secrets: inherit    
