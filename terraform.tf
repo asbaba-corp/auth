@@ -34,12 +34,12 @@ module "lambda_function" {
   function_name          = "cataprato-auth-lambda"
   description            = "Cataprato auth"
   handler                = "main.handler"
-  runtime                = "Python3.10"
+  runtime                = "python3.10"
   ephemeral_storage_size = 512
   architectures          = ["x86_64"]
   publish                = true
 
-  source_path = "${path.module}/dist/main.py"
+  source_path = "${path.module}/main.py"
 
   store_on_s3 = true
   s3_bucket   = module.s3_bucket.s3_bucket_id
@@ -113,7 +113,7 @@ module "lambda_layer_s3" {
 
   layer_name          = "cataprato-auth-layer-s3"
   description         = "Pip layer"
-  compatible_runtimes = ["Python3.10"]
+  compatible_runtimes = ["python3.10"]
 
   source_path = "${path.module}/dist"
 
