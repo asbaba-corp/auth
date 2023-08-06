@@ -8,14 +8,7 @@ on:
   
 jobs:
   build:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v3
-    - run: |
-        gh pr checkout ${{ github.event.issue.number }}
-        # do your job...
-      env:
-        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }} # required for gh
+    uses: asbaba-corp/pipelines/.github/workflows/pr-check-python.yml@main
+    secrets: inherit    
         
-  #uses: asbaba-corp/pipelines/.github/workflows/pr-check-python.yml@main
-  #secrets: inherit    
+ 
