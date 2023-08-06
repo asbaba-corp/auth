@@ -13,4 +13,5 @@ jobs:
       with:
         repository_language: "python"
         config_directory: .
+        module: auth
       secrets: inherit   
