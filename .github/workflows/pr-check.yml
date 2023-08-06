@@ -9,7 +9,13 @@ jobs:
   check:
     runs-on: ubuntu-latest
     steps:
-    
+    - name: Github API Request
+      id: request
+      uses: octokit/request-action@v2.0.0
+      with:
+        route: ${{ github.event.issue.pull_request.url }}
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     - name: Execute for pull request comments only
       if: github.event.issue.pull_request
       run: echo "This is a pull request comment event"
