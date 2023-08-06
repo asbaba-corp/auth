@@ -9,6 +9,7 @@ on:
 jobs:
     check:
       uses: asbaba-corp/pipelines/.github/workflows/release-dev.yml@main
+      if: github.event.pull_request.merged == true
       with:
         repository_language: "python"
       secrets: inherit   
