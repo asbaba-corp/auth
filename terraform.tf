@@ -10,6 +10,7 @@ terraform {
 
     workspaces {
       name = "cataprato-workspace"
+      prefix = "module-"
     }
   }
 }
