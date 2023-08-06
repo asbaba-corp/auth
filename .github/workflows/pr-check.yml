@@ -1,8 +1,12 @@
 name: Build Node.js
 
-on: pull_request 
+on: 
+  pull_request:
+  issue_comment:
+    type:[created]
   
 jobs:
   check:
+    if: ${{ always() || (github.event.issue.pull_request && github.event.issue_comment.comment.body === "/check") }}
     uses: asbaba-corp/pipelines/.github/workflows/pr-check-python.yml@main
     secrets: inherit    
