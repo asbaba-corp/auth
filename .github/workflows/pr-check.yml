@@ -7,27 +7,15 @@ on:
     types: [created]
   
 jobs:
-  check:
+  build:
     runs-on: ubuntu-latest
     steps:
-    - name: Github API Request
-      id: request
-      uses: octokit/request-action@v2.0.0
-      with:
-        route: ${{ github.event.issue.pull_request.url }}
+    - uses: actions/checkout@v3
+    - run: |
+        gh pr checkout ${{ github.event.issue.number }}
+        # do your job...
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-    - name: Checkout PR Branch
-      uses: actions/checkout@v2
-      with:
-        token: ${{ secrets.GITHUB_TOKEN }}
-        repository: ${{ fromJson(steps.request.outputs.data).head.repo.full_name }}
-        ref: ${{ steps.pr_data.outputs.branch }}
-    - name: Execute for pull request comments only
-      if: github.event.issue.pull_request
-      run: echo "This is a pull request comment event"
-
-      
-#    if: ${{ always() || (github.event.issue.pull_request && github.event.issue.comment.body == '/check') }}
-#    uses: asbaba-corp/pipelines/.github/workflows/pr-check-python.yml@main
-#    secrets: inherit    
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }} # required for gh
+        
+  #uses: asbaba-corp/pipelines/.github/workflows/pr-check-python.yml@main
+  #secrets: inherit    
