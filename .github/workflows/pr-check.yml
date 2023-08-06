@@ -1,7 +1,8 @@
 name: Build Python
 
 on: 
-  #pull_request:
+  pull_request:
+    types: [opened]
   issue_comment:
     types: [created]
   
