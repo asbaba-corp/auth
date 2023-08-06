@@ -74,10 +74,10 @@ def register_user(request: CreateUser):
 @route.post("/auth")
 def login(request: CreateUser):
     user = get_user(request.email)
-    # Verify password
-
     if not user:
         return {"message": "User doesn't exist"}
+
+    # Verify password
     if not pwd_context.verify(request.password, user["password"]):
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,

@@ -1,5 +1,5 @@
 # serverless.yaml
-service: FastAPI-Lambda-Function
+service: Auth-Lambda
 package:
   individually: true
 provider:
@@ -18,8 +18,8 @@ custom:
   pythonRequirements:
     dockerizePip: true
     layer:
-      name: FastAPI-Lambda-Function
-      description: FastAPI-Lambda-Function API Layer
+      name: Auth-Lambda
+      description: Auth-Lambda API Layer
       compatibleRuntimes:
         - python3.8
 functions:
