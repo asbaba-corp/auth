@@ -3,7 +3,7 @@ name: Build Node.js
 on: 
   pull_request:
   issue_comment:
-    type:[created]
+    types: [created]
   
 jobs:
   check:
