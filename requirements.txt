@@ -1,5 +1,6 @@
 annotated-types==0.5.0
 anyio==3.7.1
+bcrypt==4.0.1
 boto3==1.28.20
 botocore==1.31.20
 cfgv==3.3.1
@@ -13,6 +14,7 @@ h11==0.14.0
 identify==2.5.26
 idna==3.4
 jmespath==1.0.1
+mangum==0.17.0
 nodeenv==1.8.0
 passlib==1.7.4
 platformdirs==3.10.0
