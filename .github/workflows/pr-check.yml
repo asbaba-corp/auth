@@ -7,6 +7,7 @@ on:
   
 jobs:
   check:
-    if: ${{ always() || (github.event.issue.pull_request && github.event.issue.comment.body == '/check') }}
-    uses: asbaba-corp/pipelines/.github/workflows/pr-check-python.yml@main
-    secrets: inherit    
+    run: echo ${{github.event.issue.pull_request}}
+#    if: ${{ always() || (github.event.issue.pull_request && github.event.issue.comment.body == '/check') }}
+#    uses: asbaba-corp/pipelines/.github/workflows/pr-check-python.yml@main
+#    secrets: inherit    
