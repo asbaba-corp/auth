@@ -1,12 +1,13 @@
 import uuid
 from datetime import datetime
 from botocore.exceptions import ClientError
-from src.db.dynamodb.connection import dynamo
+from main import DatabaseError, UserNotFoundException
+from src.db.dynamodb.connection import dynamo as dynamodb
 
 
 def register(user):
     try:
-        response = dynamo.put_item(
+        response = dynamodb.put_item(
             TableName="Users",
             Item={
                 "id": {"S": str(uuid.uuid4())},
@@ -19,15 +20,17 @@ def register(user):
         )
         return response
     except ClientError as exception:
-        return {"error": exception.response["Error"]["Message"]}
+        raise DatabaseError(
+            f"Database error: {exception.response['Error']['Message']}"
+        ) from exception
 
 
 def get_user(email):
     try:
-        response = dynamo.get_item(TableName="Users", Key={"email": {"S": email}})
+        response = dynamodb.get_item(TableName="Users", Key={"email": {"S": email}})
         user = response.get("Item")
         if not user:
-            return None
+            raise UserNotFoundException(f"User with email '{email}' not found")
         user_data = {
             "id": user["id"]["S"],
             "email": user["email"]["S"],
@@ -36,4 +39,6 @@ def get_user(email):
         }
         return user_data
     except ClientError as exception:
-        return {"error": exception.response["Error"]["Message"]}
+        raise DatabaseError(
+            f"Database error: {exception.response['Error']['Message']}"
+        ) from exception
