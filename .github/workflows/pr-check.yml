@@ -1,0 +1,13 @@
+name: Build Python
+
+on: 
+  pull_request:
+  issue_comment:
+    types: [created]
+  
+jobs:
+  build:
+    uses: asbaba-corp/pipelines/.github/workflows/pr-check-python.yml@main
+    secrets: inherit
+    with:
+      module: "auth"

@@ -1,0 +1,17 @@
+name: Release Dev Workflow
+
+on:
+  pull_request:
+    types: [closed]
+    branches:
+      - main
+
+jobs:
+    check:
+      uses: asbaba-corp/pipelines/.github/workflows/release-dev.yml@main
+      if: github.event.pull_request.merged == true
+      with:
+        repository_language: "python"
+        config_directory: .
+        module: "auth"
+      secrets: inherit   
