@@ -6,10 +6,10 @@ on:
       - main
 
 jobs:
-    check:
-      uses: asbaba-corp/pipelines/.github/workflows/release-dev.yml@main
-      with:
-        repository_language: "python"
-        config_directory: .
-        module: "auth"
-      secrets: inherit   
+  release:
+    uses: asbaba-corp/pipelines/.github/workflows/release-dev.yml@main
+    with:
+      repository_language: "python"
+      config_directory: .
+      module: "auth"
+    secrets: inherit   
