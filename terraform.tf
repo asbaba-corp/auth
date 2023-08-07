@@ -121,9 +121,6 @@ module "lambda_layer_s3" {
   s3_bucket   = module.s3_bucket.s3_bucket_id
 }
 
-
-
-
 module "s3_bucket" {
   source  = "terraform-aws-modules/s3-bucket/aws"
   version = "3.14.1"
