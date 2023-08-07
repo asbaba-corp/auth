@@ -1,8 +1,9 @@
 name: Release Dev Workflow
 
 on:
-  pull_request:
-    types: [closed]
+  pull_request_target:
+    types:
+      - closed
     branches:
       - main
 
