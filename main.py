@@ -113,7 +113,7 @@ def get_user(email):
         ) from exception
 
 
-@app.post("/dev/register")
+@app.post("/register")
 def register_user(request: CreateUser):
     try:
         user = get_user(request.email)
@@ -135,7 +135,7 @@ def register_user(request: CreateUser):
         return {"message": "User registered successfully", "access_token": access_token}
 
 
-@app.post("/dev/auth")
+@app.post("/auth")
 def login(request: CreateUser):
     try:
         user = get_user(request.email)
