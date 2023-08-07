@@ -9,8 +9,7 @@ terraform {
     organization = "Cataprato"
 
     workspaces {
-      name = "cataprato-workspace"
-      prefix = "module-"
+      name = "cataprato-auth"
     }
   }
 }
