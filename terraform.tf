@@ -44,6 +44,9 @@ module "lambda_function" {
 {
     path             ="${path.module}/"
     pip_requirements = false
+    patterns = [
+        "!dist/"
+      ]
   
 }
   ]
@@ -125,7 +128,7 @@ module "lambda_layer_s3" {
   source_path = [
 
 {
-    path             ="${path.module}/dist/"
+    path             ="${path.module}/dist.zip"
     pip_requirements = false
 }
   ]
