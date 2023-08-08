@@ -115,7 +115,13 @@ module "lambda_layer_s3" {
   description         = "Pip layer"
   compatible_runtimes = ["python3.10"]
 
-  source_path = "${path.module}/dist/python"
+  source_path = [
+
+{
+    path             ="${path.module}/dist/python"
+    pip_requirements = false
+}
+  ]
 
   store_on_s3 = true
   s3_bucket   = module.s3_bucket.s3_bucket_id
