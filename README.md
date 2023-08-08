@@ -1,3 +1,5 @@
+![alt text](https://github.com/asbaba-corp/auth/blob/main/auth_diagram.png?raw=true)
+
 # DEVOPS SECTION
 
 # Create venv

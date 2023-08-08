@@ -1,7 +1,8 @@
 import uuid
 from datetime import datetime
 from botocore.exceptions import ClientError
-from main import DatabaseError, UserNotFoundException
+from src.users.exceptions import UserNotFoundException
+from src.exceptions import DatabaseError
 from src.db.dynamodb.connection import dynamo as dynamodb
 
 
