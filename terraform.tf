@@ -44,6 +44,7 @@ module "lambda_function" {
 {
     path             ="${path.module}/"
     pip_requirements = false
+  
 }
   ]
 
