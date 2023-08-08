@@ -1,7 +1,5 @@
 ![alt text](https://github.com/asbaba-corp/auth/blob/main/auth_diagram.png?raw=true)
 
-# DEVOPS SECTION
-
 # Create venv
 
 ```
@@ -14,26 +12,25 @@ python -m venv venv
 pip install -r requirements.txt
 ```
 
-# Deploy to AWS Lambdas
+# Install Pre-commit (Optional)
 
 ```
-
-sls deploy --aws-profile default
+pre-commit install
 ```
-
-# DEVELOPMENT SECTION
 
 # Run the project
 
 ```
-python main.py
-```
-
-or with uvicorn
-
-```
 uvicorn main:run_app
 ```
+
+# If you want to do offline lambda testing:
+
+```
+serverless offline start
+```
+
+# Useful dev commands:
 
 # Pytest
 
@@ -53,22 +50,17 @@ To check pre-commit status:
 
 # Freezing requirements with venv
 
-Might change depending on the OS, but find the pip inside venv folder:
+Might change depending on the OS, but the idea is to freeze requirements starting from the pip inside venv folder:
 
 ```
  .\venv\Scripts\pip3 freeze > requirements.txt
 ```
 
-# Commands used to generate pylintrc and pre-commit-config.yaml (Optional)
+# DEVOPS SECTION
 
-Generate pylintrc:
-
-```
-pylint --generate-rcfile | out-file -encoding utf8 .pylintrc
-```
-
-after configurating the .pre-commit-config.yaml
+# Deploy to AWS Lambdas
 
 ```
-pre-commit install
+
+sls deploy --aws-profile default
 ```
