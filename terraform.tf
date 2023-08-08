@@ -124,7 +124,7 @@ module "lambda_layer_s3" {
   source_path = [
 
 {
-    path             ="${path.module}/dist/python"
+    path             ="${path.module}/dist/"
     pip_requirements = false
 }
   ]
