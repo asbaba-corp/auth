@@ -1,4 +1,4 @@
-![alt text](https://github.com/asbaba-corp/auth/blob/development/auth_diagram.png?raw=true)
+![alt text](https://github.com/asbaba-corp/auth/blob/main/auth_diagram.png?raw=true)
 
 # DEVOPS SECTION
 
