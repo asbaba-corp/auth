@@ -39,7 +39,7 @@ module "lambda_function" {
   architectures          = ["x86_64"]
   publish                = true
 
-  source_path = "${path.module}/main.py"
+  source_path = "${path.module}/"
 
   store_on_s3 = true
   s3_bucket   = module.s3_bucket.s3_bucket_id
