@@ -1,14 +1,18 @@
-from datetime import timedelta, datetime
+from datetime import datetime, timedelta
+
 from fastapi import APIRouter, HTTPException, status
 from jose import jwt
 from passlib.context import CryptContext
-from  db.dynamodb.repositories.users_repository import get_user, register
-from  users.config import SECRET_KEY, ALGORITHM, ACCESS_TOKEN_EXPIRE_MINUTES
-from  users.schemas import CreateUser
-from  users.exceptions import UserNotFoundException
 
-from  exceptions import handle_response  # type: ignore
-
+from src.db.dynamodb.repositories.users_repository import (
+    get_all_users,
+    get_user,
+    register,
+)
+from src.exceptions import handle_response  # type: ignore
+from src.users.config import ACCESS_TOKEN_EXPIRE_MINUTES, ALGORITHM, SECRET_KEY
+from src.users.exceptions import UserNotFoundException
+from src.users.schemas import CreateUser
 
 router = APIRouter()
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
@@ -58,3 +62,12 @@ def login(request: CreateUser):
         return {"message": "Login successful", "access_token": access_token}
     except UserNotFoundException:
         return handle_response(str(UserNotFoundException), 404)
+
+
+@router.get("/list")
+def list_users():
+    try:
+        users_list = get_all_users()
+        return users_list
+    except Exception as exception:
+        return exception

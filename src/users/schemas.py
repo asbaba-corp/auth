@@ -8,4 +8,4 @@ class CreateUser(BaseModel):
 
 class UserResponse(BaseModel):
     email: str
-    success: bool
+    token: str

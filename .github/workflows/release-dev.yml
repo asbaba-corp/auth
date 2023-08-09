@@ -1,5 +1,5 @@
 name: Release Dev Workflow
- 
+
 on:
   push:
     branches:
@@ -11,4 +11,4 @@ jobs:
     with:
       repository_language: "python"
       config_directory: .
-    secrets: inherit   
+    secrets: inherit
