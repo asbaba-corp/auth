@@ -6,6 +6,6 @@ on:
     types: [created]
   
 jobs:
-  build:
+  pr-check:
     uses: asbaba-corp/pipelines/.github/workflows/pr-check-python.yml@main
     secrets: inherit

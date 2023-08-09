@@ -1,8 +1,8 @@
 import json
 import hashlib
 from fastapi.logger import logger as api_logger
-from src.tests.utils import generate_random_string
-from src.users.aws_lambdas.register_user import lambda_handler
+from  tests.utils import generate_random_string
+from  users.aws_lambdas.register_user import lambda_handler
 
 
 def test_register():

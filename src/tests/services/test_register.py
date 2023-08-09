@@ -1,9 +1,9 @@
 from datetime import datetime
 from fastapi.logger import logger as api_logger
 from main import start_application
-from src.db.dynamodb.repositories.users_repository import register
-from src.users.schemas import CreateUser
-from src.tests.utils import generate_random_string
+from  db.dynamodb.repositories.users_repository import register
+from  users.schemas import CreateUser
+from  tests.utils import generate_random_string
 
 app = start_application()
 
