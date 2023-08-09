@@ -39,7 +39,7 @@ module "lambda_function" {
   architectures          = ["x86_64"]
   publish                = true
 
-  path             ="${path.module}/src"
+  source_path            = "${path.module}/src"
 
 
   store_on_s3 = true
