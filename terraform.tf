@@ -62,13 +62,13 @@ module "lambda_function" {
 
 
 
-     allowed_triggers = {
+  allowed_triggers = {
     APIGatewayAny = {
       service    = "apigateway"
-      source_arn = "arn:aws:execute-api:us-east-1:${data.aws_caller_identity.current.account_id}:${one(data.aws_apigatewayv2_apis.cataprato.ids)}
+      source_arn = "arn:aws:execute-api:us-east-1:${data.aws_caller_identity.current.account_id}:${one(data.aws_apigatewayv2_apis.cataprato.ids)}/*/*"
     }
-  }  
- 
+  }
+
 
   create_lambda_function_url = true
   authorization_type         = "AWS_IAM"
@@ -101,9 +101,9 @@ module "lambda_function" {
     delete = "20m"
   }
 
- /*  tags = {
-    Module = "lambda1"
-  } */
+   tags = {
+    Deployment = "terraform"
+  } 
 }
 
 module "lambda_layer_s3" {
