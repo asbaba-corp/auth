@@ -141,5 +141,5 @@ module "s3_bucket" {
 }
 
 data "aws_apigatewayv2_apis" "cataprato"{
-  protocol = "HTTP"
+  protocol_type  = "HTTP"
 }
