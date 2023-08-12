@@ -18,7 +18,7 @@ provider "aws" {
   skip_metadata_api_check     = true
   skip_region_validation      = true
   skip_credentials_validation = true
-  skip_requesting_account_id  = true
+  skip_requesting_account_id  = false
 }
 
 
@@ -65,9 +65,9 @@ module "lambda_function" {
   allowed_triggers = {
     APIGatewayAny = {
       service    = "apigateway"
-      source_arn = "arn:aws:execute-api:us-east-1:${data.aws_caller_identity.current.account_id}:${one(data.aws_apigatewayv2_apis.cataprato.ids)}/*/*/*"
+      source_arn = data.aws_apigatewayv2_api.cataprato_api.execution_arn
     }
-  }
+  } 
 
 
   create_lambda_function_url = true
@@ -121,6 +121,10 @@ module "lambda_layer_s3" {
 
   store_on_s3 = true
   s3_bucket   = module.s3_bucket.s3_bucket_id
+
+tags = {
+    Deployment = "terraform"
+  } 
 }
 
 module "s3_bucket" {
@@ -140,6 +144,9 @@ module "s3_bucket" {
   }
 }
 
+data "aws_apigatewayv2_api" "cataprato_api" {
+  api_id = one(data.aws_apigatewayv2_apis.cataprato.ids)
+}
 data "aws_apigatewayv2_apis" "cataprato"{
   protocol_type  = "HTTP"
 }
