@@ -65,7 +65,7 @@ module "lambda_function" {
   allowed_triggers = {
     APIGatewayAny = {
       service    = "apigateway"
-      source_arn = "arn:aws:execute-api:us-east-1:${data.aws_caller_identity.current.account_id}:aqnku8akd0/*/*/*"
+      source_arn = "arn:aws:execute-api:us-east-1:${data.aws_caller_identity.current.account_id}:${tolist(data.aws_apigatewayv2_apis.cataprato)[0]}/*/*"
     }
   }
 
@@ -138,4 +138,8 @@ module "s3_bucket" {
   versioning = {
     enabled = true
   }
+}
+
+data "aws_apigatewayv2_apis" "cataprato"{
+  protocol = "HTTP"
 }
