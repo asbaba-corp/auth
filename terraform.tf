@@ -65,7 +65,7 @@ module "lambda_function" {
   allowed_triggers = {
     APIGatewayAny = {
       service    = "apigateway"
-      source_arn = "arn:aws:execute-api:us-east-1:${data.aws_caller_identity.current.account_id}:aqnku8akd0/*/*/*"
+      source_arn = "arn:aws:execute-api:us-east-1:${data.aws_caller_identity.current.account_id}:${one(data.aws_apigatewayv2_apis.cataprato.ids)}/*/*"
     }
   }
 
@@ -101,9 +101,9 @@ module "lambda_function" {
     delete = "20m"
   }
 
- /*  tags = {
-    Module = "lambda1"
-  } */
+   tags = {
+    Deployment = "terraform"
+  } 
 }
 
 module "lambda_layer_s3" {
@@ -138,4 +138,8 @@ module "s3_bucket" {
   versioning = {
     enabled = true
   }
+}
+
+data "aws_apigatewayv2_apis" "cataprato"{
+  protocol_type  = "HTTP"
 }
