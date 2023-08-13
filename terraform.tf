@@ -65,7 +65,7 @@ module "lambda_function" {
   allowed_triggers = {
     APIGatewayAny = {
       service    = "apigateway"
-      source_arn = data.aws_apigatewayv2_api.cataprato_api.execution_arn
+      source_arn = "${data.aws_apigatewayv2_api.cataprato_api.execution_arn}/*/*"
     }
   } 
 
