@@ -1,4 +1,4 @@
-name: Release Prod Workflow
+run-name: Release Prod
 
 on:
   release:
