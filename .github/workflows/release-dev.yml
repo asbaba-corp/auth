@@ -1,4 +1,4 @@
-run-name: Release Dev
+name: Release Dev
  
 on:
   push:
