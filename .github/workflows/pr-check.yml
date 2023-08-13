@@ -1,4 +1,4 @@
-name: Build Python
+run-name: PR check
 
 on: 
   pull_request:
