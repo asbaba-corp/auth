@@ -1,13 +1,13 @@
 from datetime import timedelta, datetime
 from fastapi import APIRouter, HTTPException, status
-from jose import jwt
+from jose import jwt, JWTError
 from passlib.context import CryptContext
-from  db.dynamodb.repositories.users_repository import get_user, register
-from  users.config import SECRET_KEY, ALGORITHM, ACCESS_TOKEN_EXPIRE_MINUTES
-from  users.schemas import CreateUser
-from  users.exceptions import UserNotFoundException
+from db.dynamodb.repositories.users_repository import get_user, register
+from users.config import SECRET_KEY, ALGORITHM, ACCESS_TOKEN_EXPIRE_MINUTES
+from users.schemas import CreateUser, UserResponse
+from users.exceptions import UserNotFoundException, InvalidCredentialsException
 
-from  exceptions import handle_response  # type: ignore
+from exceptions import handle_response  # type: ignore
 
 
 router = APIRouter()
@@ -22,24 +22,32 @@ def create_access_token(data: dict, expires_delta: timedelta):
     return encoded_jwt
 
 
+def get_current_user(token: str):
+    try:
+        payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+        email: str = payload.get("sub")  # type: ignore
+        if email is None:
+            return handle_response(str(UserNotFoundException), 404)
+        return email
+    except JWTError:
+        return handle_response(str(InvalidCredentialsException), 401)
+
+
 @router.post("/register")
 def register_user(request: CreateUser):
+    expires = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
+    access_token = create_access_token({"sub": request.email}, expires)
     try:
         user = get_user(request.email)
-        return user
+        return UserResponse(email=user["email"], token=access_token)
     except UserNotFoundException:
         hashed_password = pwd_context.hash(request.password)
-
         user = {
             "email": request.email,
             "password": hashed_password,
         }
         register(user)
-
-        expires = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
-        access_token = create_access_token({"sub": request.email}, expires)
-
-        return {"message": "User registered successfully", "access_token": access_token}
+        return UserResponse(email=user["email"], token=access_token)
 
 
 @router.post("/auth")
@@ -55,6 +63,6 @@ def login(request: CreateUser):
         expires = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
         access_token = create_access_token({"sub": request.email}, expires)
 
-        return {"message": "Login successful", "access_token": access_token}
+        return UserResponse(email=user["email"], token=access_token)
     except UserNotFoundException:
         return handle_response(str(UserNotFoundException), 404)

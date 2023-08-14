@@ -21,7 +21,7 @@ pre-commit install
 # Run the project
 
 ```
-uvicorn main:run_app
+uvicorn main:app
 ```
 
 # If you want to do offline lambda testing:
