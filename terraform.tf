@@ -52,15 +52,8 @@ module "lambda_function" {
     module.lambda_layer_s3.lambda_layer_arn,
   ]
 
- /*  environment_variables = {
-    Hello      = "World"
-    Serverless = "Terraform"
-  } */
-
   role_path   = "/tf-managed/"
   policy_path = "/tf-managed/"
-
-
 
   allowed_triggers = {
     APIGatewayAny = {
@@ -82,17 +75,21 @@ module "lambda_function" {
   }
   invoke_mode = "RESPONSE_STREAM"
 
+   attach_policy_statements = true
   policy_statements = {
     dynamodb = {
       effect    = "Allow",
-      actions   = ["dynamodb:BatchWriteItem"],
-      resources = ["arn:aws:dynamodb:us-east-1:`${data.aws_caller_identity.current.account_id}`:table/Test"]
+      actions   = [
+        "dynamodb:BatchGetItem",
+    				"dynamodb:GetItem",
+    				"dynamodb:Query",
+    				"dynamodb:Scan",
+    				"dynamodb:BatchWriteItem",
+    				"dynamodb:PutItem",
+    				"dynamodb:UpdateItem"
+],
+      resources = ["${data.aws_dynamodb_table.users.arn}"]
     },
-    s3_read = {
-      effect    = "Deny",
-      actions   = ["s3:HeadObject", "s3:GetObject"],
-      resources = ["arn:aws:s3:::my-bucket/*"]
-    }
   }
 
   timeouts = {
@@ -142,6 +139,10 @@ module "s3_bucket" {
   versioning = {
     enabled = true
   }
+}
+
+data "aws_dynamodb_table" "users" {
+  name = "Users"
 }
 
 data "aws_apigatewayv2_api" "cataprato_api" {
