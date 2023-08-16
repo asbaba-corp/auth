@@ -44,7 +44,7 @@ module "lambda_function" {
                                     path          = "${path.module}"
                                     prefix_in_zip = "src"
                                     patterns      = <<END
-                                          !src/.*  
+                                          src/.*  
                                         END
                                   }
 ]
