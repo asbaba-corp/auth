@@ -1,19 +1,26 @@
 import uuid
 from datetime import datetime
 from botocore.exceptions import ClientError
-from users.exceptions import UserNotFoundException
-from exceptions import DatabaseError
-from db.dynamodb.connection import dynamo as dynamodb
+from src.users.schemas import CreateUser
+from src.users.exceptions import UserNotFoundException
+from src.exceptions import DatabaseError
+from src.db.dynamodb.connection import dynamo as dynamodb
 
 
-def register(user):
+def register(user: CreateUser):
     try:
         user_id = str(uuid.uuid4())
         created_at = datetime.utcnow().isoformat()
-        query = (
-            f"INSERT INTO Users (id, email, password, created_at) "
-            f"VALUES ('{user_id}', '{user['email']}', '{user['password']}', '{created_at}')"
-        )
+        value = {
+            "id": user_id,
+            "email": user.email,
+            "password": user.password,
+            "created_at": created_at,
+        }
+        query = f"""
+        INSERT INTO Users
+        VALUE {value}
+        """
         response = dynamodb.execute_statement(Statement=query)
         return response
     except ClientError as exception:
@@ -22,15 +29,16 @@ def register(user):
         ) from exception
 
 
-def get_user(email):
+def get_user(email: str):
     try:
         query = f"SELECT * FROM Users WHERE email = '{email}'"
         response = dynamodb.execute_statement(
             Statement=query,
         )
-        user = response["Items"][0]
-        if not user:
+
+        if not response["Items"]:
             raise UserNotFoundException(f"User with email '{email}' not found")
+        user = response["Items"][0]
         user_data = {
             "id": user["id"]["S"],
             "email": user["email"]["S"],
