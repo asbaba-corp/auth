@@ -18,10 +18,10 @@ pip install -r requirements.txt
 pre-commit install
 ```
 
-# Run the project
+# Run the project at root directory
 
 ```
-uvicorn main:app
+uvicorn src.main:app
 ```
 
 # If you want to do offline lambda testing:

@@ -2,12 +2,12 @@ from datetime import timedelta, datetime
 from fastapi import APIRouter, HTTPException, status
 from jose import jwt, JWTError
 from passlib.context import CryptContext
-from db.dynamodb.repositories.users_repository import get_user, register
-from users.config import SECRET_KEY, ALGORITHM, ACCESS_TOKEN_EXPIRE_MINUTES
-from users.schemas import CreateUser, UserResponse
-from users.exceptions import UserNotFoundException, InvalidCredentialsException
+from src.db.dynamodb.repositories.users_repository import get_user, register
+from src.users.config import SECRET_KEY, ALGORITHM, ACCESS_TOKEN_EXPIRE_MINUTES
+from src.users.schemas import CreateUser, UserResponse
+from src.users.exceptions import UserNotFoundException, InvalidCredentialsException
 
-from exceptions import handle_response  # type: ignore
+from src.exceptions import handle_response  # type: ignore
 
 
 router = APIRouter()
@@ -42,12 +42,9 @@ def register_user(request: CreateUser):
         return UserResponse(email=user["email"], token=access_token)
     except UserNotFoundException:
         hashed_password = pwd_context.hash(request.password)
-        user = {
-            "email": request.email,
-            "password": hashed_password,
-        }
+        user = CreateUser(email=request.email, password=hashed_password)
         register(user)
-        return UserResponse(email=user["email"], token=access_token)
+        return UserResponse(email=user.email, token=access_token)
 
 
 @router.post("/auth")

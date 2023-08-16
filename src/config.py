@@ -10,7 +10,6 @@ class AppConfig:
         self.aws_secret_access_key = os.environ.get("AWS_SECRET_ACCESS_KEY")
         self.aws_session_token = os.environ.get("AWS_SESSION_TOKEN")
         self.debug_mode = os.environ.get("DEBUG")
-        self.database_url = os.environ.get("DATABASE_URL")
 
 
 config = AppConfig()
