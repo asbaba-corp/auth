@@ -33,7 +33,7 @@ module "lambda_function" {
 
   function_name          = "cataprato-auth-lambda"
   description            = "Cataprato auth"
-  handler                = "main.handler"
+  handler                = "app.main.handler"
   runtime                = "python3.10"
   ephemeral_storage_size = 512
   architectures          = ["x86_64"]
@@ -44,7 +44,7 @@ module "lambda_function" {
                                     path          = "${path.module}/src"
                                     #prefix_in_zip = "app"
                                     patterns      = <<END
-                                          !src/.*  
+                                          !src/.*
                                         END
                                   }
 ]
@@ -66,7 +66,7 @@ module "lambda_function" {
       service    = "apigateway"
       source_arn = "${data.aws_apigatewayv2_api.cataprato_api.execution_arn}/*/*"
     }
-  } 
+  }
 
 
   create_lambda_function_url = true
@@ -86,13 +86,7 @@ module "lambda_function" {
     dynamodb = {
       effect    = "Allow",
       actions   = [
-        "dynamodb:BatchGetItem",
-    				"dynamodb:GetItem",
-    				"dynamodb:Query",
-    				"dynamodb:Scan",
-    				"dynamodb:BatchWriteItem",
-    				"dynamodb:PutItem",
-    				"dynamodb:UpdateItem"
+        "dynamodb:*"
 ],
       resources = ["${data.aws_dynamodb_table.users.arn}"]
     },
@@ -106,7 +100,7 @@ module "lambda_function" {
 
    tags = {
     Deployment = "terraform"
-  } 
+  }
 }
 
 module "lambda_layer_s3" {
@@ -127,7 +121,7 @@ module "lambda_layer_s3" {
 
 tags = {
     Deployment = "terraform"
-  } 
+  }
 }
 
 module "s3_bucket" {
