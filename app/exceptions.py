@@ -16,7 +16,7 @@ def handle_response(
 ):
     if received_status == 200:
         return schema
-    statuses = [400, 401, 404, 500, 409]
+    statuses = [400, 401, 403, 404, 409, 500]
     if received_status in statuses:
         raise HTTPException(status_code=received_status, detail=message)
-    raise HTTPException(status_code=500, detail="Internal Server Error")
+    raise HTTPException(status_code=500, detail=f"Internal Server Error {message}")

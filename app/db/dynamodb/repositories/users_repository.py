@@ -3,7 +3,7 @@ from datetime import datetime
 from botocore.exceptions import ClientError
 from app.users.schemas import CreateUser
 from app.users.exceptions import UserNotFoundException
-from app.exceptions import DatabaseError
+from app.exceptions import handle_response
 from app.db.dynamodb.connection import dynamo as dynamodb
 
 
@@ -24,9 +24,7 @@ def register(user: CreateUser):
         response = dynamodb.execute_statement(Statement=query)
         return response
     except ClientError as exception:
-        raise DatabaseError(
-            f"Database error: {exception.response['Error']['Message']}"
-        ) from exception
+        return handle_response(exception.response["Error"]["Message"], 500)
 
 
 def get_user(email: str):
@@ -47,6 +45,4 @@ def get_user(email: str):
         }
         return user_data
     except ClientError as exception:
-        raise DatabaseError(
-            f"Database error: {exception.response['Error']['Message']}"
-        ) from exception
+        return handle_response(exception.response["Error"]["Message"], 500)
