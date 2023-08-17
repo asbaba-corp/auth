@@ -1,5 +1,5 @@
 import boto3
-from src.config import config
+from app.config import config
 
 session = boto3.session.Session(  # type: ignore
     aws_access_key_id=config.aws_access_key_id,

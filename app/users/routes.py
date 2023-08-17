@@ -2,12 +2,12 @@ from datetime import timedelta, datetime
 from fastapi import APIRouter, HTTPException, status
 from jose import jwt, JWTError
 from passlib.context import CryptContext
-from src.db.dynamodb.repositories.users_repository import get_user, register
-from src.users.config import SECRET_KEY, ALGORITHM, ACCESS_TOKEN_EXPIRE_MINUTES
-from src.users.schemas import CreateUser, UserResponse
-from src.users.exceptions import UserNotFoundException, InvalidCredentialsException
+from app.db.dynamodb.repositories.users_repository import get_user, register
+from app.users.config import SECRET_KEY, ALGORITHM, ACCESS_TOKEN_EXPIRE_MINUTES
+from app.users.schemas import CreateUser, UserResponse
+from app.users.exceptions import UserNotFoundException, InvalidCredentialsException
 
-from src.exceptions import handle_response  # type: ignore
+from app.exceptions import handle_response  # type: ignore
 
 
 router = APIRouter()
