@@ -42,10 +42,7 @@ module "lambda_function" {
   source_path            = [
                                 {
                                     path          = "${path.module}/src"
-                                    #prefix_in_zip = "app"
-                                    patterns      = <<END
-                                          !src/.*  
-                                        END
+                                    prefix_in_zip = "app"
                                   }
 ]
   store_on_s3 = true
