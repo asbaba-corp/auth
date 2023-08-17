@@ -41,7 +41,7 @@ module "lambda_function" {
 
   source_path            = [
                                 {
-                                    path          = "${path.module}"
+                                    path          = "${path.module}/src"
                                     prefix_in_zip = "app"
                                     patterns      = <<END
                                           !src/.*  
