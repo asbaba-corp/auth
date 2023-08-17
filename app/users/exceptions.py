@@ -1,6 +1,13 @@
 class UserNotFoundException(Exception):
-    pass
+    message = "User not found"
+    status = 404
+
+
+class UserAlreadyExistsException(Exception):
+    message = "User already exists"
+    status = 409
 
 
 class InvalidCredentialsException(Exception):
-    pass
+    message = "Invalid Credentials"
+    status = 401

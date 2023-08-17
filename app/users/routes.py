@@ -1,11 +1,15 @@
 from datetime import timedelta, datetime
-from fastapi import APIRouter, HTTPException, status
+from fastapi import APIRouter
 from jose import jwt, JWTError
 from passlib.context import CryptContext
 from app.db.dynamodb.repositories.users_repository import get_user, register
 from app.users.config import SECRET_KEY, ALGORITHM, ACCESS_TOKEN_EXPIRE_MINUTES
 from app.users.schemas import CreateUser, UserResponse
-from app.users.exceptions import UserNotFoundException, InvalidCredentialsException
+from app.users.exceptions import (
+    UserAlreadyExistsException,
+    UserNotFoundException,
+    InvalidCredentialsException,
+)
 
 from app.exceptions import handle_response  # type: ignore
 
@@ -27,10 +31,14 @@ def get_current_user(token: str):
         payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
         email: str = payload.get("sub")  # type: ignore
         if email is None:
-            return handle_response(str(UserNotFoundException), 404)
+            return handle_response(
+                UserNotFoundException.message, UserNotFoundException.status
+            )
         return email
     except JWTError:
-        return handle_response(str(InvalidCredentialsException), 401)
+        return handle_response(
+            InvalidCredentialsException.message, InvalidCredentialsException.status
+        )
 
 
 @router.post("/register")
@@ -39,7 +47,9 @@ def register_user(request: CreateUser):
     access_token = create_access_token({"sub": request.email}, expires)
     try:
         user = get_user(request.email)
-        return UserResponse(email=user["email"], token=access_token)
+        return handle_response(
+            UserAlreadyExistsException.message, UserAlreadyExistsException.status
+        )
     except UserNotFoundException:
         hashed_password = pwd_context.hash(request.password)
         user = CreateUser(email=request.email, password=hashed_password)
@@ -51,15 +61,16 @@ def register_user(request: CreateUser):
 def login(request: CreateUser):
     try:
         user = get_user(request.email)
-        if not pwd_context.verify(request.password, user["password"]):
-            raise HTTPException(
-                status_code=status.HTTP_401_UNAUTHORIZED,
-                detail="Incorrect password",
+        if not pwd_context.verify(request.password, user["password"]):  # type: ignore
+            handle_response(
+                InvalidCredentialsException.message, InvalidCredentialsException.status
             )
 
         expires = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
         access_token = create_access_token({"sub": request.email}, expires)
 
-        return UserResponse(email=user["email"], token=access_token)
+        return UserResponse(email=user["email"], token=access_token)  # type: ignore
     except UserNotFoundException:
-        return handle_response(str(UserNotFoundException), 404)
+        return handle_response(
+            UserNotFoundException.message, UserNotFoundException.status
+        )
