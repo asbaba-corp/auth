@@ -33,7 +33,7 @@ module "lambda_function" {
 
   function_name          = "cataprato-auth-lambda"
   description            = "Cataprato auth"
-  handler                = "app.main.handler"
+  handler                = "main.handler"
   runtime                = "python3.10"
   ephemeral_storage_size = 512
   architectures          = ["x86_64"]
@@ -41,7 +41,7 @@ module "lambda_function" {
 
   source_path            = [
                                 {
-                                    path          = "${path.module}/src/"
+                                    path          = "${path.module}/src"
                                     #prefix_in_zip = "app"
                                     patterns      = <<END
                                           !src/.*  
