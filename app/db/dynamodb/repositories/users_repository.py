@@ -1,10 +1,10 @@
 import uuid
 from datetime import datetime
 from botocore.exceptions import ClientError
-from app.users.schemas import CreateUser
-from app.users.exceptions import UserNotFoundException
-from app.exceptions import handle_response
-from app.db.dynamodb.connection import dynamo as dynamodb
+from ....users.schemas import CreateUser
+from ....users.exceptions import UserNotFoundException
+from ....exceptions import handle_response
+from ....db.dynamodb.connection import dynamo as dynamodb
 
 
 def register(user: CreateUser):
