@@ -39,7 +39,15 @@ module "lambda_function" {
   architectures          = ["x86_64"]
   publish                = true
 
-  source_path            = "${path.module}/src/"
+   source_path            = [
+                           {
+                               path          = "${path.module}/app"
+                               #prefix_in_zip = "app"
+                               patterns      = <<END
+                                     !src/.*  
+                                   END
+                             }
+                             ]
   store_on_s3 = true
   s3_bucket   = module.s3_bucket.s3_bucket_id
   s3_prefix   = "lambda-builds/"
