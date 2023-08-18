@@ -43,12 +43,12 @@ module "lambda_function" {
 
    source_path            = [
                            {
-                               path          = "${path.module}/app"
-                               patterns      = <<END
-                                     !app/.+*  
-                                   END
-                             }
-                             ]
+                               path          = "${path.module}"
+                               patterns      = ["!app/.*"]
+                               commands = [":zip . app/"]       
+                            }
+                            ]
+
 
   store_on_s3 = true
   s3_bucket   = module.s3_bucket.s3_bucket_id
