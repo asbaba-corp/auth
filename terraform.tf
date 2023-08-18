@@ -43,7 +43,7 @@ module "lambda_function" {
 
    source_path            = [
                            {
-                               path          = "${path.module}/src"  
+                               path          = "${path.module}/dist/src"  
                             }
                             ]
 
