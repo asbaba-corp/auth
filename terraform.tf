@@ -44,7 +44,7 @@ module "lambda_function" {
    source_path            = [
                            {
                                path          = "${path.module}"
-                               patterns      = [!app/.*]
+                               patterns      = ["!app/.*"]
                                commands = [":zip . app/"]       
                             }
                             ]
