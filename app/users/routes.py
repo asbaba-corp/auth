@@ -1,5 +1,5 @@
 from datetime import timedelta, datetime
-from fastapi import APIRouter
+from fastapi import APIRouter, Request
 from jose import jwt, JWTError
 from passlib.context import CryptContext
 from app.exceptions import handle_response  # type: ignore
@@ -73,3 +73,24 @@ def login(request: CreateUser):
         return handle_response(
             UserNotFoundException.message, UserNotFoundException.status
         )
+
+
+@router.get("/token")
+def refresh_token(request: Request):
+    try:
+        token = request.headers["Authorization"]
+        if not token:
+            handle_response(
+                InvalidCredentialsException.message, InvalidCredentialsException.status
+            )
+
+        user = get_current_user(token)
+        expires = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
+        access_token = create_access_token({"sub": user}, expires)
+        return UserResponse(email=user, token=access_token)  # type: ignore
+    except UserNotFoundException:
+        return handle_response(
+            UserNotFoundException.message, UserNotFoundException.status
+        )
+    except KeyError:
+        return handle_response("Invalid Authorization Key", 403)
