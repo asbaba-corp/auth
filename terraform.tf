@@ -43,9 +43,9 @@ module "lambda_function" {
 
    source_path            = [
                            {
-                               path          = "${path.module}/app"
+                               path          = "${path.module}"
                                patterns      = <<END
-                                     !app/.*  
+                                     !app/.+*  
                                    END
                              }
                              ]
