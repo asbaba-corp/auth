@@ -43,8 +43,9 @@ module "lambda_function" {
 
    source_path            = [
                            {
-                               path          = "${path.module}"
-                               patterns      = ["^app(/.*)?$"]    
+                               path          = "${path.module}"  
+                               patterns =["!app/.*",]
+                               commands = [ "cp . app/",]          
                             }
                             ]
 
