@@ -38,6 +38,7 @@ module "lambda_function" {
   ephemeral_storage_size = 512
   architectures          = ["x86_64"]
   publish                = true
+  timeout                = 5
 
 
 
