@@ -43,8 +43,8 @@ module "lambda_function" {
 
    source_path            = [
                            {
-                               path          = "${path.module}/app"  
-                               commands = ["ls"]          
+                               path          = "${path.module}/"  
+                               patterns = ["!app/.+"]          
                             }
                             ]
 
