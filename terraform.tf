@@ -44,7 +44,7 @@ module "lambda_function" {
    source_path            = [
                            {
                                path          = "${path.module}/app"  
-                               commands = ["rm -fd -r !(app)"]          
+                               commands = ["ls"]          
                             }
                             ]
 
