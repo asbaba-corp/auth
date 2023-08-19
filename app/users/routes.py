@@ -56,7 +56,7 @@ def register_user(request: CreateUser):
         return UserResponse(email=user.email, token=access_token)
 
 
-@router.post("/auth")
+@router.post("/login")
 def login(request: CreateUser):
     try:
         user = get_user(request.email)
@@ -75,8 +75,8 @@ def login(request: CreateUser):
         )
 
 
-@router.get("/token")
-def refresh_token(request: Request):
+@router.get("/auth")
+def get_current_user_by_token(request: Request):
     try:
         token = request.headers["Authorization"]
         if not token:
@@ -85,9 +85,10 @@ def refresh_token(request: Request):
             )
 
         user = get_current_user(token)
+        db_user = get_user(email=user)  # type: ignore
         expires = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
         access_token = create_access_token({"sub": user}, expires)
-        return UserResponse(email=user, token=access_token)  # type: ignore
+        return UserResponse(email=db_user["email"], token=access_token)  # type: ignore
     except UserNotFoundException:
         return handle_response(
             UserNotFoundException.message, UserNotFoundException.status
