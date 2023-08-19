@@ -31,7 +31,7 @@ module "lambda_function" {
   source  = "terraform-aws-modules/lambda/aws"
   version = "5.3.0"
 
-  function_name          = "cataprato-auth-lambda"
+  function_name          = "auth-lambda"
   description            = "Cataprato auth"
   handler                = "app.main.handler"
   runtime                = "python3.10"
@@ -39,8 +39,6 @@ module "lambda_function" {
   architectures          = ["x86_64"]
   publish                = true
   timeout                = 5
-
-
 
    source_path            = [
                            {
